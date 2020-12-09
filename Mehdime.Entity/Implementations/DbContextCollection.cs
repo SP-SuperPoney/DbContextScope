@@ -36,10 +36,12 @@ namespace Mehdime.Entity
         private bool _disposed;
         private bool _completed;
         private bool _readOnly;
+        private string _nameOrConnectionString;
 
         internal Dictionary<Type, DbContext> InitializedDbContexts { get { return _initializedDbContexts; } }
 
-        public DbContextCollection(bool readOnly = false, IsolationLevel? isolationLevel = null, IDbContextFactory dbContextFactory = null)
+        public DbContextCollection(bool readOnly = false, IsolationLevel? isolationLevel = null, IDbContextFactory dbContextFactory = null,
+            string nameOrConnectionString = null)
         {
             _disposed = false;
             _completed = false;
@@ -50,6 +52,7 @@ namespace Mehdime.Entity
             _readOnly = readOnly;
             _isolationLevel = isolationLevel;
             _dbContextFactory = dbContextFactory;
+            _nameOrConnectionString = nameOrConnectionString;
         }
 
         public TDbContext Get<TDbContext>() where TDbContext : DbContext
@@ -63,9 +66,7 @@ namespace Mehdime.Entity
             {
                 // First time we've been asked for this particular DbContext type.
                 // Create one, cache it and start its database transaction if needed.
-                var dbContext = _dbContextFactory != null
-                    ? _dbContextFactory.CreateDbContext<TDbContext>()
-                    : Activator.CreateInstance<TDbContext>();
+                var dbContext = Create<TDbContext>();
 
                 _initializedDbContexts.Add(requestedType, dbContext);
 
@@ -280,6 +281,21 @@ namespace Mehdime.Entity
         {
             TValue value;
             return dictionary.TryGetValue(key, out value) ? value : default(TValue);
+        }
+
+        private TDbContext Create<TDbContext>() where TDbContext : DbContext
+        {
+            TDbContext dbContext;
+
+            if (_dbContextFactory != null)
+            {
+                dbContext = _dbContextFactory.CreateDbContext<TDbContext>(_nameOrConnectionString);
+            } else
+            {
+                dbContext = Activator.CreateInstance<TDbContext>();
+            }
+
+            return dbContext;
         }
     }
 }

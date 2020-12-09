@@ -19,38 +19,42 @@ namespace Mehdime.Entity
             _dbContextFactory = dbContextFactory;
         }
 
-        public IDbContextScope Create(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting)
+        public IDbContextScope Create(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting, string nameOrConnectionString = null)
         {
             return new DbContextScope(
                 joiningOption: joiningOption, 
                 readOnly: false, 
                 isolationLevel: null, 
-                dbContextFactory: _dbContextFactory);
+                dbContextFactory: _dbContextFactory,
+                nameOrConnectionString);
         }
 
-        public IDbContextReadOnlyScope CreateReadOnly(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting)
+        public IDbContextReadOnlyScope CreateReadOnly(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting, string nameOrConnectionString = null)
         {
             return new DbContextReadOnlyScope(
                 joiningOption: joiningOption, 
                 isolationLevel: null, 
-                dbContextFactory: _dbContextFactory);
+                dbContextFactory: _dbContextFactory,
+                nameOrConnectionString);
         }
 
-        public IDbContextScope CreateWithTransaction(IsolationLevel isolationLevel)
+        public IDbContextScope CreateWithTransaction(IsolationLevel isolationLevel, string nameOrConnectionString = null)
         {
             return new DbContextScope(
                 joiningOption: DbContextScopeOption.ForceCreateNew, 
                 readOnly: false, 
                 isolationLevel: isolationLevel, 
-                dbContextFactory: _dbContextFactory);
+                dbContextFactory: _dbContextFactory,
+                nameOrConnectionString);
         }
 
-        public IDbContextReadOnlyScope CreateReadOnlyWithTransaction(IsolationLevel isolationLevel)
+        public IDbContextReadOnlyScope CreateReadOnlyWithTransaction(IsolationLevel isolationLevel, string nameOrConnectionString = null)
         {
             return new DbContextReadOnlyScope(
                 joiningOption: DbContextScopeOption.ForceCreateNew, 
                 isolationLevel: isolationLevel, 
-                dbContextFactory: _dbContextFactory);
+                dbContextFactory: _dbContextFactory,
+                nameOrConnectionString);
         }
 
         public IDisposable SuppressAmbientContext()

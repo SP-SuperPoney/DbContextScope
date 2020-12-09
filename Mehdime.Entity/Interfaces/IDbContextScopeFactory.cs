@@ -28,7 +28,7 @@ namespace Mehdime.Entity
         /// is an advanced feature that should be used with great care and only if you fully understand the
         /// implications of doing this.
         /// </summary>
-        IDbContextScope Create(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting);
+        IDbContextScope Create(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting, string nameOrConnectionString = null);
 
         /// <summary>
         /// Creates a new DbContextScope for read-only queries.
@@ -42,7 +42,7 @@ namespace Mehdime.Entity
         /// is an advanced feature that should be used with great care and only if you fully understand the
         /// implications of doing this.
         /// </summary>
-        IDbContextReadOnlyScope CreateReadOnly(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting);
+        IDbContextReadOnlyScope CreateReadOnly(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting, string nameOrConnectionString = null);
 
         /// <summary>
         /// Forces the creation of a new ambient DbContextScope (i.e. does not
@@ -58,7 +58,7 @@ namespace Mehdime.Entity
         /// This is an advanced feature that you should use very carefully
         /// and only if you fully understand the implications of doing this.
         /// </summary>
-        IDbContextScope CreateWithTransaction(IsolationLevel isolationLevel);
+        IDbContextScope CreateWithTransaction(IsolationLevel isolationLevel, string nameOrConnectionString = null);
 
         /// <summary>
         /// Forces the creation of a new ambient read-only DbContextScope (i.e. does not
@@ -74,7 +74,7 @@ namespace Mehdime.Entity
         /// This is an advanced feature that you should use very carefully
         /// and only if you fully understand the implications of doing this.
         /// </summary>
-        IDbContextReadOnlyScope CreateReadOnlyWithTransaction(IsolationLevel isolationLevel);
+        IDbContextReadOnlyScope CreateReadOnlyWithTransaction(IsolationLevel isolationLevel, string nameOrConnectionString = null);
 
         /// <summary>
         /// Temporarily suppresses the ambient DbContextScope. 
