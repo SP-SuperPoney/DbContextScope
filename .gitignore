@@ -182,3 +182,4 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+/.vs/DbContextScope/FileContentIndex/fd964698-629c-4b43-9c9e-bce2a3bc31e9.vsidx
