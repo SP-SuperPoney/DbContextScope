@@ -19,9 +19,11 @@ namespace Numero3.EntityFramework.Demo.DatabaseContext
 		{
 			base.OnModelCreating(modelBuilder);
 
-			// Overrides for the convention-based mappings.
-			// We're assuming that all our fluent mappings are declared in this assembly.
-			modelBuilder.Configurations.AddFromAssembly(Assembly.GetAssembly(typeof(UserManagementDbContext)));
+            // Supprime le schéma "dbo." qu'utilise EF6 (Reliqua SQLServer)
+			modelBuilder.HasDefaultSchema("");
+            // Overrides for the convention-based mappings.
+            // We're assuming that all our fluent mappings are declared in this assembly.
+            modelBuilder.Configurations.AddFromAssembly(Assembly.GetAssembly(typeof(UserManagementDbContext)));
 		}
 	}
 }
