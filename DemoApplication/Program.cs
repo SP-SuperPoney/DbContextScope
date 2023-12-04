@@ -13,7 +13,9 @@ namespace Numero3.EntityFramework.Demo
 		static void Main(string[] args)
 		{
 			//-- Poor-man DI - build our dependencies by hand for this demo
-			var contextFactory = new DbContextFactory("Server=(local);Database=DbContextScopeDemo;Trusted_Connection=true;");
+			var contextFactory = new DbContextFactory("Server=LDBPGSD01.juxta.network;port=5436;Database=bddmini;User Id=juxta;Password=juxta");
+
+
 			var dbContextScopeFactory = new DbContextScopeFactory(contextFactory);
 			var ambientDbContextLocator = new AmbientDbContextLocator();
 			var userRepository = new UserRepository(ambientDbContextLocator);
@@ -27,7 +29,6 @@ namespace Numero3.EntityFramework.Demo
 			{
 				Console.WriteLine("This demo application will create a database named DbContextScopeDemo in the default SQL Server instance on localhost. Edit the connection string in UserManagementDbContext if you'd like to create it somewhere else.");
 				Console.WriteLine("Press enter to start...");
-				Console.ReadLine();
 
 				//-- Demo of typical usage for read and writes
 				Console.WriteLine("Creating a user called Mary...");
